@@ -7,16 +7,18 @@ var script = (function() {
   const os = function() {
     var userAgent = window.navigator.userAgent,
         platform = window.navigator?.userAgentData?.platform || window.navigator.platform,
-        macuserOSPlatforms = ['MacintuserOSh', 'MacIntel', 'MacPPC', 'Mac68K', 'darwin'],
+        macOSPlatforms = ['MacintuserOSh', 'MacIntel', 'MacPPC', 'Mac68K', 'darwin'],
         windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
-        iuserOSPlatforms = ['iPhone', 'iPad', 'iPod'],
+        iOSPlatforms = ['iPhone', 'iPad', 'iPod'],
         userOS = null;
-    if (macuserOSPlatforms.indexOf(platform) !== -1) {
+    if (macOSPlatforms.indexOf(platform) !== -1) {
       userOS = 'macOS';
-    } else if (iuserOSPlatforms.indexOf(platform) !== -1) {
+    } else if (iOSPlatforms.indexOf(platform) !== -1) {
       userOS = 'iOS';
     } else if (/Android/.test(userAgent)) {
       userOS = 'Android';
+    } else if (platform.replace(' ', '').includes('ChromeOS')) {
+      userOS = 'Chrome OS';
     }
     return userOS;
   }
@@ -36,7 +38,7 @@ var script = (function() {
     <a href="https://google.com"><img src="./assets/download/macappstore.svg" alt="Download on the App Store" height="40px"></a>
     <button id="downloads" type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">All Downloads</button>
     `;
-  } else if (os == 'Android') {
+  } else if (os == 'Android' || os == 'Chrome OS') {
     downloadButtons = `
     <a href="https://google.com"><img src="./assets/download/appstore.svg" alt="Download on the App Store" height="40px"></a>
     <button id="downloads" type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">All Downloads</button>
