@@ -1,7 +1,9 @@
 
 var script = (function() {
 
-  // Setup
+  // Version: web-alpha3
+
+  // ---------- Setup ----------
   
   // Getting OS to show download button
   const os = function() {
@@ -25,17 +27,17 @@ var script = (function() {
   var downloadButtons = function() {
     if (os() == 'iOS') {
       return `
-      <a href="https://google.com" class="downloadBtn"><img src="./assets/download/appstore.svg" alt="Download on the Mac App Store" height="48px"></a>
+      <a href="https://google.com"><img src="./assets/download/appstore.svg" alt="Download on the Mac App Store" height="48px" class="downloadBtn"></a>
       <button id="downloads" type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">All Downloads</button>
       `;
     } else if (os() == 'macOS') {
       return `
-      <a href="https://google.com" class="downloadBtn"><img src="./assets/download/macappstore.svg" alt="Download on the App Store" height="48px"></a>
+      <a href="https://google.com"><img src="./assets/download/macappstore.svg" alt="Download on the App Store" height="48px" class="downloadBtn"></a>
       <button id="downloads" type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">All Downloads</button>
       `;
     } else if (os() == 'Android' || os() == 'Chrome OS') {
       return `
-      <a href="https://google.com" class="downloadBtn"><img src="./assets/download/googleplay.png" alt="Download on Google Play" height="48px"></a>
+      <a href="https://google.com"><img src="./assets/download/googleplay.png" alt="Download on Google Play" height="48px" class="downloadBtn"></a>
       <button id="downloads" type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">All Downloads</button>
       `;
     } else {
@@ -47,5 +49,6 @@ var script = (function() {
   }
 
   $('#downloadButtons').html(downloadButtons());
+  $('.downloadBtn').css('transition', 'width 1s ease-in-out');
   $('#downloads').width($('.downloadBtn').width());
 })();
