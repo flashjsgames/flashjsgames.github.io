@@ -7,9 +7,9 @@ var script = (function() {
   const os = function() {
     var userAgent = window.navigator.userAgent,
         platform = window.navigator?.userAgentData?.platform || window.navigator.platform,
-        macOSPlatforms = ['MacintuserOSh', 'MacIntel', 'MacPPC', 'Mac68K', 'darwin'],
+        macOSPlatforms = ['MacintuserOSh', 'MacIntel', 'MacPPC', 'Mac68K', 'darwin', 'macOS'],
         windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
-        iOSPlatforms = ['iPhone', 'iPad', 'iPod'],
+        iOSPlatforms = ['iPhone', 'iPad', 'iPod', 'iOS', 'iPadOS'],
         userOS = null;
     if (macOSPlatforms.indexOf(platform) !== -1) {
       userOS = 'macOS';
