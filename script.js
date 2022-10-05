@@ -7,8 +7,7 @@ var script = (function() {
   const os = function() {
     var userAgent = window.navigator.userAgent,
         platform = window.navigator?.userAgentData?.platform || window.navigator.platform,
-        macOSPlatforms = ['MacintuserOSh', 'MacIntel', 'MacPPC', 'Mac68K', 'darwin', 'macOS'],
-        windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+        macOSPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K', 'darwin', 'macOS'],
         iOSPlatforms = ['iPhone', 'iPad', 'iPod', 'iOS', 'iPadOS'],
         userOS = null;
     if (macOSPlatforms.indexOf(platform) !== -1) {
@@ -26,27 +25,27 @@ var script = (function() {
   var downloadButtons = function() {
     if (os() == 'iOS') {
       return `
-      <a href="https://google.com"><img src="./assets/download/appstore.svg" alt="Download on the Mac App Store" height="48px"></a>
+      <a href="https://google.com" class="downloadBtn"><img src="./assets/download/appstore.svg" alt="Download on the Mac App Store" height="48px"></a>
       <button id="downloads" type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">All Downloads</button>
       `;
     } else if (os() == 'macOS') {
       return `
-      <a href="https://google.com"><img src="./assets/download/macappstore.svg" alt="Download on the App Store" height="48px"></a>
+      <a href="https://google.com" class="downloadBtn"><img src="./assets/download/macappstore.svg" alt="Download on the App Store" height="48px"></a>
       <button id="downloads" type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">All Downloads</button>
       `;
     } else if (os() == 'Android' || os() == 'Chrome OS') {
       return `
-      <a href="https://google.com"><img src="./assets/download/googleplay.png" alt="Download on Google Play" height="48px"></a>
+      <a href="https://google.com" class="downloadBtn"><img src="./assets/download/googleplay.png" alt="Download on Google Play" height="48px"></a>
       <button id="downloads" type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">All Downloads</button>
       `;
     } else {
       return `
-      <button id="windows" type="button" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Download for Windows</button>
+      <button id="windows" type="button" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold downloadBtn">Download for Windows</button>
       <button id="downloads" type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">All Downloads</button>
       `;
     }
   }
 
   $('#downloadButtons').html(downloadButtons());
-  
+  $('#downloads').width($('.downloadBtn').width());
 })();
