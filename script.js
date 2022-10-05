@@ -24,17 +24,17 @@ var script = (function() {
   }
 
   var downloadButtons = function() {
-    if (os == 'iOS') {
+    if (os() == 'iOS') {
       return `
       <a href="https://google.com"><img src="./assets/download/appstore.svg" alt="Download on the App Store" height="48px"></a>
       <button id="downloads" type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">All Downloads</button>
       `;
-    } else if (os == 'macOS') {
+    } else if (os() == 'macOS') {
       return `
       <a href="https://google.com"><img src="./assets/download/macappstore.svg" alt="Download on the App Store" height="48px"></a>
       <button id="downloads" type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">All Downloads</button>
       `;
-    } else if (os == 'Android' || os == 'Chrome OS') {
+    } else if (os() == 'Android' || os() == 'Chrome OS') {
       return `
       <a href="https://google.com"><img src="./assets/download/appstore.svg" alt="Download on the App Store" height="48px"></a>
       <button id="downloads" type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">All Downloads</button>
@@ -47,6 +47,6 @@ var script = (function() {
     }
   }
 
-  $('#downloadButtons').html(downloadButtons);
+  $('#downloadButtons').html(downloadButtons());
   
 })();
