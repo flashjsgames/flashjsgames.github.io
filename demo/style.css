@@ -1,0 +1,42 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    color: aliceblue;
+    font-size: 150%;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow: hidden;
+}
+
+container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+flashjs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95vw;
+    height: 95vh;
+    border: 2px solid aliceblue;
+    transition: all 500ms;
+}
+
+loading {
+    border: 8px solid azure; /* Light grey */
+    border-top: 8px solid #FFCD3C; /* Blue */
+    border-radius: 50%;
+    width: 4vw;
+    height: 4vw;
+    animation: spin 1s forwards infinite;
+    transition: all 250ms;
+}
+  
+@keyframes spin {
+    0% { transform: rotate(180deg); }
+    100% { transform: rotate(540deg); }
+}
