@@ -8,12 +8,12 @@ var flashjs = (function() {
     d: null
   }
 
-  const w = parseInt(window.getComputedStyle(document.querySelector('flashjs')).width.replace('px', ''));
-  const h = parseInt(window.getComputedStyle(document.querySelector('flashjs')).height.replace('px', ''));
+  const w = parseInt(window.getComputedStyle(document.querySelector('flashjs')).width.replace('px', '')) / 105 * 95;
+  const h = parseInt(window.getComputedStyle(document.querySelector('flashjs')).height.replace('px', '')) / 105 * 95;
   config.d = w < h ? w : h;
 
-  document.querySelector('flashjs').style.width = config.d + 'px';
-  document.querySelector('flashjs').style.height = config.d + 'px';
+  document.querySelector('flashjs').style.width = config.d / config.ar[1] + 'px';
+  document.querySelector('flashjs').style.height = config.d / config.ar[0] + 'px';
 
   function init(configuration) {
     var aspectRatio = configuration?.aspectRatio;
