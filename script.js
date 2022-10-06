@@ -1,8 +1,6 @@
 
 var script = (function() {
 
-  // Version: web-alpha4
-
   // ---------- Setup ----------
   
   // Getting OS to show download button
