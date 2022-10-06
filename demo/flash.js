@@ -49,7 +49,7 @@ var flashjs = (function() {
           document.querySelector('loading').remove();
         }, 500);
       }, 500);
-    }, 500);
+    }, 1000);
   }
 
   return {
