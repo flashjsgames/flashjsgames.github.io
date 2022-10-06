@@ -12,6 +12,9 @@ var flashjs = (function() {
   const h = parseInt(window.getComputedStyle(document.querySelector('flashjs')).height.replace('px', ''));
   config.d = w < h ? w : h;
 
+  document.querySelector('flashjs').style.width = config.d + 'px';
+  document.querySelector('flashjs').style.height = config.d + 'px';
+
   function init(configuration) {
     var aspectRatio = configuration?.aspectRatio;
     if (aspectRatio == null) {
