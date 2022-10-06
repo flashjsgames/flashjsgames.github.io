@@ -43,7 +43,7 @@ var flashjs = (function() {
       document.querySelector('loading').style.height = '0';
 
       setTimeout(function() {
-        document.querySelector('loading').style.marginBottom = h + h / 10 + 8 + 'px';
+        document.querySelector('loading').style.marginBottom = h + h / 9 + 64 + 'px';
         document.querySelector('flashjs').style.width = config.d / config.ar[1] + 'px';
         document.querySelector('flashjs').style.height = config.d / config.ar[0] + 'px';
         console.log('started');
