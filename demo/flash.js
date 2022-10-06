@@ -8,8 +8,8 @@ var flashjs = (function() {
     d: null
   }
 
-  const w = parseInt(window.getComputedStyle(document.querySelector('flashjs')).width.replace('px', '')) / 200 * 95;
-  const h = parseInt(window.getComputedStyle(document.querySelector('flashjs')).height.replace('px', '')) / 200 * 95;
+  const w = parseInt(window.getComputedStyle(document.querySelector('flashjs')).width.replace('px', '')) / 100 * 90;
+  const h = parseInt(window.getComputedStyle(document.querySelector('flashjs')).height.replace('px', '')) / 100 * 90;
   config.d = w < h ? w : h;
 
   document.querySelector('flashjs').style.width = config.d / config.ar[1] + 'px';

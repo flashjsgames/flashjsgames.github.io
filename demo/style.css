@@ -20,8 +20,8 @@ flashjs {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 200vw;
-    height: 200vh;
+    width: 100vw;
+    height: 100vh;
     border: 2px solid aliceblue;
     transition: all 500ms;
 }
