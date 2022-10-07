@@ -58,10 +58,10 @@ var flashjs = (function() {
   }
 
   function fadeIn(el, time) {
-    const timeSeg = time / 100
-    for (var i = 0; i < 100; i ++) {
+    const timeSeg = time / 50;
+    for (var i = 0; i < 50; i ++) {
       wait(timeSeg);
-      el.style.opacity = window.getComputedStyle(el).opacity + 0.01;
+      el.style.opacity = parseFloat(window.getComputedStyle(el).opacity) + 0.02 + '';
     }
   }
 
