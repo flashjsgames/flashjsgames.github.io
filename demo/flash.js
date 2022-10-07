@@ -39,7 +39,7 @@ var flashjs = (function() {
     document.querySelector('flashjs').style.width = config.d + 'px';
     document.querySelector('flashjs').style.height = config.d + 'px';
     
-    document.querySelector('flashjs').style.borderRadius = config.br || 0 + 'px';
+    document.querySelector('flashjs').style.borderRadius = (config.br || 0) + 'px';
   
     document.querySelector('loading').style.opacity = 1;
   }
