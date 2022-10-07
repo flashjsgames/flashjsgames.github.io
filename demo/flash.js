@@ -15,7 +15,7 @@ var flashjs = (function() {
   document.querySelector('flashjs').style.width = config.d + 'px';
   document.querySelector('flashjs').style.height = config.d + 'px';
 
-  fadeIn(document.querySelector('loading'), 1000);
+  document.querySelector('loading').style.opacity = 1;
 
   function init(configuration) {
     var aspectRatio = configuration?.aspectRatio;
@@ -55,25 +55,6 @@ var flashjs = (function() {
         }, 500);
       }, 500);
     }, 1000);
-  }
-
-  function fadeIn(el, time) {
-    const timeSeg = time / 50;
-    el.style.opacity = '1';
-    wait(1000);
-    el.style.opacity = '0';
-    for (var i = 0; i < 50; i ++) {
-      wait(timeSeg);
-      el.style.opacity = parseFloat(window.getComputedStyle(el).opacity) + 0.02 + '';
-    }
-  }
-
-  function wait(ms) {
-    var start = Date.now(),
-          now = start;
-    while (now - start < ms) {
-      now = Date.now();
-    }
   }
 
   return {
