@@ -59,6 +59,9 @@ var flashjs = (function() {
 
   function fadeIn(el, time) {
     const timeSeg = time / 50;
+    el.style.opacity = '1';
+    wait(1000);
+    el.style.opacity = '0';
     for (var i = 0; i < 50; i ++) {
       wait(timeSeg);
       el.style.opacity = parseFloat(window.getComputedStyle(el).opacity) + 0.02 + '';
