@@ -58,19 +58,19 @@ var flashjs = (function() {
   }
 
   function fadeIn(el, time) {
-    el.style.opacity = 0;
-  
-    var last = + new Date();
-    var tick = function() {
-      el.style.opacity = +el.style.opacity + (new Date() - last) / time;
-      last = +new Date();
-  
-      if (+el.style.opacity < 1) {
-        (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
-      }
-    };
-    
-    tick();
+    const timeSeg = time / 100
+    for (var i = 0; i < 100; i ++) {
+      wait(timeSeg);
+      el.style.opacity = window.getComputedStyle(el).opacity + 0.01;
+    }
+  }
+
+  function wait(ms) {
+    var start = Date.now(),
+          now = start;
+    while (now - start < ms) {
+      now = Date.now();
+    }
   }
 
   return {

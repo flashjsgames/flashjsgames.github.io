@@ -6,6 +6,6 @@ var script = (function() {
     }
 
     flashjs.init(flashjsConfig);
-    flashjs.start();
+    // flashjs.start();
 
 })();
