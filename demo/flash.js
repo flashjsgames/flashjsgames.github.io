@@ -5,17 +5,14 @@ var flashjs = (function() {
 
   var config = {
     ar: null,
+    br: null,
     d: null
   }
 
   const w = parseInt(window.getComputedStyle(document.querySelector('flashjs')).width.replace('px', '')) / 105 * 90;
   const h = parseInt(window.getComputedStyle(document.querySelector('flashjs')).height.replace('px', '')) / 105 * 90;
+  
   config.d = w < h ? w : h;
-
-  document.querySelector('flashjs').style.width = config.d + 'px';
-  document.querySelector('flashjs').style.height = config.d + 'px';
-
-  document.querySelector('loading').style.opacity = 1;
 
   function init(configuration) {
     var aspectRatio = configuration?.aspectRatio;
@@ -35,8 +32,16 @@ var flashjs = (function() {
     aspectRatio = aspectRatioInt;
 
     config.ar = aspectRatio;
+    config.br = configuration.borderRadius;
 
     console.log(config);
+  
+    document.querySelector('flashjs').style.width = config.d + 'px';
+    document.querySelector('flashjs').style.height = config.d + 'px';
+    
+    document.querySelector('flashjs').style.borderRadius = config.br || 0 + 'px';
+  
+    document.querySelector('loading').style.opacity = 1;
   }
   
   function start() {
