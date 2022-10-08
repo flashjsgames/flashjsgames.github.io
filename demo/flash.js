@@ -73,7 +73,8 @@ var flashjs = (function () {
       document.querySelector('flashjs').style.backgroundColor = config.bg;
 
       setTimeout(function () {
-        document.querySelector('loading').style.marginBottom = h + h / 9 + 64 + 'px';
+        document.querySelector('loading').style.marginBottom = h / 2 + 'px';
+        document.querySelector('loading').style.opacity = 0;
         if (config.tar) {
           document.querySelector('flashjs').style.width = config.d + 'px';
           document.querySelector('flashjs').style.height = config.d / (config.ar[0] / config.ar[1]) + 'px';
