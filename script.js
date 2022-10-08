@@ -1,15 +1,15 @@
 
-var script = (function() {
+var script = (function () {
 
   // ---------- Setup ----------
-  
+
   // Getting OS to show download button
-  const os = function() {
+  const os = function () {
     var userAgent = window.navigator.userAgent,
-        platform = window.navigator?.userAgentData?.platform || window.navigator.platform,
-        macOSPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K', 'darwin', 'macOS'],
-        iOSPlatforms = ['iPhone', 'iPad', 'iPod', 'iOS', 'iPadOS'],
-        userOS = null;
+      platform = window.navigator?.userAgentData?.platform || window.navigator.platform,
+      macOSPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K', 'darwin', 'macOS'],
+      iOSPlatforms = ['iPhone', 'iPad', 'iPod', 'iOS', 'iPadOS'],
+      userOS = null;
     if (macOSPlatforms.indexOf(platform) !== -1) {
       userOS = 'macOS';
     } else if (iOSPlatforms.indexOf(platform) !== -1) {
@@ -22,7 +22,7 @@ var script = (function() {
     return userOS;
   }
 
-  var downloadButtons = function() {
+  var downloadButtons = function () {
     if (os() == 'iOS') {
       return `
       <a href="https://google.com" style="height: 48px;"><img src="./assets/download/appstore.svg" alt="Download on Google Play" height="48px" class="downloadBtn" style="margin-bottom: 8px;"></a>

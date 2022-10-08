@@ -1,12 +1,7 @@
 
-var script = (function() {
+var script = (function () {
 
-  const flashjsConfig = {
-    aspectRatio: '1:1',
-    borderRadius: 8
-  }
-
-  flashjs.init(flashjsConfig);
+  flashjs.init();
   flashjs.start();
 
 })();
