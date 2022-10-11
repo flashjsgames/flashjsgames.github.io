@@ -26,11 +26,12 @@ var script = (function () {
   testSvg.setAttribute('height', 5 * flashjs.svd);
   testSvg.style.borderRadius = '50%';
   testSvg.centered();
+  testSvg.id = 'testSvg';
   testSvg.appendChild(testRect);
   game.appendChild(testSvg);
 
   // flashjs starts game
   flashjs.start();
   
-  applyGravity(testSvg);
+  applyGravity(document.getElementById('testSvg'));
 })();
