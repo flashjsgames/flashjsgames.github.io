@@ -114,11 +114,11 @@ var flashjs = (function () {
   function gravity(el, mul) {
     console.log('applying gravity to:');
     console.log(el);
-    el.setAttribute('speed', '1');
+    var speed = 1
     setInterval(function () {
-      el.style.marginTop = parseFloat(window.getComputedStyle(el).width.replace('px', '')) + parseFloat(el.getAttribute('speed'));
-      el.setAttribute('speed', parseFloat(el.getAttribute('speed')) + 0.5);
-    }, 15 * (mul || 1));
+      el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) + speed;
+      speed += 0.5;
+    }, 20 * (mul || 1));
   }
 
   return {
