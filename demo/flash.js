@@ -118,6 +118,8 @@ var flashjs = (function () {
     setInterval(function () {
       el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) + speed;
       speed += 0.5;
+      console.log('WHY IS THIS NOT WORKING')
+      console.log(speed);
     }, 20 * (mul || 1));
   }
 
