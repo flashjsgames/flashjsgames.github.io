@@ -67,31 +67,45 @@ var flashjs = (function () {
 
     document.querySelector('flashjs').innerHTML = document.querySelector('flashjs').innerHTML;
 
-    setTimeout(function () {
-      document.querySelector('loading').style.width = '0';
-      document.querySelector('loading').style.height = '0';
-      document.querySelector('flashjs').style.backgroundColor = config.bg;
+    wait(1000);
+    
+    document.querySelector('loading').style.width = '0';
+    document.querySelector('loading').style.height = '0';
+    document.querySelector('flashjs').style.backgroundColor = config.bg;
 
-      setTimeout(function () {
-        document.querySelector('loading').style.marginBottom = h / 2 + 'px';
-        document.querySelector('loading').style.opacity = 0;
-        if (config.tar) {
-          document.querySelector('flashjs').style.width = config.d + 'px';
-          document.querySelector('flashjs').style.height = config.d / (config.ar[0] / config.ar[1]) + 'px';
-        } else {
-          document.querySelector('flashjs').style.width = config.d / config.ar[1] + 'px';
-          document.querySelector('flashjs').style.height = config.d / config.ar[0] + 'px';
-        }
-        document.querySelector('flashjs').style.transition = 'all 500ms';
-        document.querySelector('flashjs').style.opacity = 1;
-        console.log('started');
+    wait(500);
 
-        setTimeout(function () {
-          document.querySelector('loading').remove();
-          document.querySelector('flashjs').style.transition = 'unset';
-        }, 500);
-      }, 500);
-    }, 1000);
+    document.querySelector('loading').style.marginBottom = h / 2 + 'px';
+    document.querySelector('loading').style.opacity = 0;
+    if (config.tar) {
+      document.querySelector('flashjs').style.width = config.d + 'px';
+      document.querySelector('flashjs').style.height = config.d / (config.ar[0] / config.ar[1]) + 'px';
+    } else {
+      document.querySelector('flashjs').style.width = config.d / config.ar[1] + 'px';
+      document.querySelector('flashjs').style.height = config.d / config.ar[0] + 'px';
+    }
+    document.querySelector('flashjs').style.transition = 'all 500ms';
+    document.querySelector('flashjs').style.opacity = 1;
+    console.log('started');
+
+    wait(500);
+
+    document.querySelector('loading').remove();
+    document.querySelector('flashjs').style.transition = 'unset';
+
+    const gravityObjects = document.querySelectorAll('[gravity="true"]');
+    gravityObjects.forEach(function (el) {
+      const mul = parseFloat(el.getAttribute('gravity-multiplier'));
+      console.log('applying gravity to:');
+      console.log(el);
+      var velocity = 1
+      setInterval(async function () {
+        el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) + velocity;
+        velocity += 0.5;
+      }, 20 * (mul || 1));
+    });
+
+    started = true;
   }
 
   window.addEventListener('resize', function () {
@@ -111,16 +125,26 @@ var flashjs = (function () {
     document.querySelector('flashjs').style.borderRadius = config.br || 0 + 'px';
   });
 
-  function gravity(el, mul) {
-    console.log('applying gravity to:');
-    console.log(el);
-    var speed = 1
-    setInterval(function () {
-      el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) + speed;
-      speed += 0.5;
-      console.log('WHY IS THIS NOT WORKING')
-      console.log(speed);
-    }, 20 * (mul || 1));
+  async function gravity(el, mul) {
+    el.setAttribute('gravity', 'true');
+    el.setAttribute('gravity-multiplier', mul);
+    if (started) {
+      console.log('applying gravity to:');
+      console.log(el);
+      var velocity = 1
+      setInterval(async function () {
+        el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) + velocity;
+        velocity += 0.5;
+      }, 20 * (mul || 1));
+    }
+  }
+
+  function wait(ms) {
+    var start = Date.now(),
+          now = start;
+    while (now - start < ms) {
+      now = Date.now();
+    }
   }
 
   return {
@@ -138,7 +162,14 @@ Object.defineProperty(HTMLElement.prototype, "centered", {
     const marginVertical = (parseFloat(window.getComputedStyle(container).height) - (this.attributes.height.value || this.style.height)) / 2;
     const marginHorizontal = (parseFloat(window.getComputedStyle(container).width) - (this.attributes.width.value || this.style.width)) / 2;
     this.style.margin = marginVertical + 'px ' + marginHorizontal + 'px';
-    document.ele
+  },
+  writable: true,
+  configurable: true
+});
+
+Object.defineProperty(HTMLElement.prototype, "applyGravity", {
+  value: function applyGravity(mul) {
+    flashjs.gravity(this, mul)
   },
   writable: true,
   configurable: true

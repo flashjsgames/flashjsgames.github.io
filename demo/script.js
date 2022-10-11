@@ -14,7 +14,6 @@ var script = (function () {
 
   // Adding variables and functions needed for game
   const game = document.querySelector('flashjs');
-  const applyGravity = flashjs.gravity;
 
   // GAME CODE START
   const testSvg = document.createElement('svg');
@@ -26,12 +25,10 @@ var script = (function () {
   testSvg.setAttribute('height', 5 * flashjs.svd);
   testSvg.style.borderRadius = '50%';
   testSvg.centered();
-  testSvg.id = 'testSvg';
+  testSvg.applyGravity();
   testSvg.appendChild(testRect);
   game.appendChild(testSvg);
 
   // flashjs starts game
   flashjs.start();
-  
-  applyGravity(document.getElementById('testSvg'));
 })();
