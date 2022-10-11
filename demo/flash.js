@@ -3,6 +3,8 @@
 
 var flashjs = (function () {
 
+  var started = false;
+
   var config = {
     ar: null,
     tar: null,
