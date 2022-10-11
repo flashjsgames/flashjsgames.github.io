@@ -111,10 +111,15 @@ var flashjs = (function () {
     document.querySelector('flashjs').style.borderRadius = config.br || 0 + 'px';
   });
 
+  function applyGravity(el) {
+    console.log('applying gravity to:' + el);
+  }
+
   return {
     svd: config.d / 90,
     init: init,
-    start: start
+    start: start, 
+    applyGravity: applyGravity
   }
 
 })();
