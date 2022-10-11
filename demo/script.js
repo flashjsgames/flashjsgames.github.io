@@ -14,7 +14,7 @@ var script = (function () {
 
   // Adding variables and functions needed for game
   const game = document.querySelector('flashjs');
-  const applyGravity = flashjs.applyGravity;
+  const applyGravity = flashjs.gravity;
 
   // GAME CODE START
   const testSvg = document.createElement('svg');

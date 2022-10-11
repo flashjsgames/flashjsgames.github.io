@@ -95,8 +95,8 @@ var flashjs = (function () {
   }
 
   window.addEventListener('resize', function () {
-    w = parseInt(window.getComputedStyle(document.querySelector('body')).width.replace('px', '')) * 0.9;
-    h = parseInt(window.getComputedStyle(document.querySelector('body')).height.replace('px', '')) * 0.9;
+    w = parseFloat(window.getComputedStyle(document.querySelector('body')).width.replace('px', '')) * 0.9;
+    h = parseFloat(window.getComputedStyle(document.querySelector('body')).height.replace('px', '')) * 0.9;
 
     config.d = w < h ? w : h;
 
@@ -111,15 +111,21 @@ var flashjs = (function () {
     document.querySelector('flashjs').style.borderRadius = config.br || 0 + 'px';
   });
 
-  function applyGravity(el) {
-    console.log('applying gravity to:' + el);
+  function gravity(el, mul) {
+    console.log('applying gravity to:');
+    console.log(el);
+    el.setAttribute('speed', '1');
+    setInterval(function () {
+      el.style.marginTop = parseFloat(window.getComputedStyle(el).width.replace('px', '')) + parseFloat(el.getAttribute('speed'));
+      el.setAttribute('speed', parseFloat(el.getAttribute('speed')) + 0.5);
+    }, 15 * (mul || 1));
   }
 
   return {
     svd: config.d / 90,
     init: init,
     start: start, 
-    applyGravity: applyGravity
+    gravity: gravity
   }
 
 })();
