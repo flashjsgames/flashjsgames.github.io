@@ -127,7 +127,7 @@ var flashjs = (function () {
     document.querySelector('flashjs').style.borderRadius = config.br || 0 + 'px';
   });
 
-  async function gravity(el, mul) {
+  async function applyGravity(el, mul) {
     el.setAttribute('gravity', 'true');
     el.setAttribute('gravity-multiplier', mul);
     if (started) {
@@ -153,7 +153,7 @@ var flashjs = (function () {
     svd: config.d / 90,
     init: init,
     start: start, 
-    gravity: gravity
+    applyGravity: applyGravity
   }
 
 })();
@@ -171,7 +171,7 @@ Object.defineProperty(HTMLElement.prototype, "centered", {
 
 Object.defineProperty(HTMLElement.prototype, "applyGravity", {
   value: function applyGravity(mul) {
-    flashjs.gravity(this, mul)
+    flashjs.applyGravity(this, mul)
   },
   writable: true,
   configurable: true
