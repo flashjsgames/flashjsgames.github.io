@@ -140,6 +140,7 @@ var flashjs = (function () {
     console.log(elId)
     movementAllowed.push(elId);
     el.setAttribute('flashjsId', elId);
+    console.log(el.getAttribute('flashjsId'))
     if (started) {
       gravity(el, mul)
     }
