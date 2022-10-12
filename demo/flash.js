@@ -167,7 +167,8 @@ var flashjs = (function () {
     svd: config.d / 90,
     init: init,
     start: start,
-    applyGravity: applyGravity
+    applyGravity: applyGravity,
+    applyCollision: applyCollision
   }
 
 })();
