@@ -18,7 +18,9 @@ var flashjs = (function () {
 
   config.d = w < h ? w : h;
 
-  var gravityAllowed = true;
+  var movementAllowed = true;
+
+  var usedIds = [];
 
   function init(userConfig) {
     const configuration = userConfig || {
@@ -131,19 +133,25 @@ var flashjs = (function () {
   function applyGravity(el, mul) {
     el.setAttribute('gravity', 'true');
     el.setAttribute('gravity-multiplier', mul);
+    var elId = uuid();
+    while (usedIds.includes(elId)) {
+      elId = uuid();
+    }
+    movementAllowed.push(elId);
+    el.setAttribute('flashjsId', elId);
     if (started) {
       gravity(el, mul)
     }
   }
 
   async function gravity(el, mul) {
-    if (gravityAllowed) {
-      var velocity = 2;
-      setInterval(async function () {
+    var velocity = 2;
+    setInterval(async function () {
+      if (movementAllowed.includes(el.getAttribute('flashjsId'))) {
         el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) + velocity * (mul || 1);
         velocity += 0.5;
-      }, 20);
-    }
+      }
+    }, 20);
   }
 
   function applyCollision(el) {
@@ -153,21 +161,41 @@ var flashjs = (function () {
     }
   }
 
-  async function collision(el, el2a) {
+  async function collision(el1, el2a) {
     const el2 = el2a || document.querySelector('flashjs');
+    var el1Id = uuid();
+    var el2Id = uuid();
+    while (usedIds.includes(el1Id)) {
+      el1Id = uuid();
+    }
+    while (usedIds.includes(el2Id)) {
+      el2Id = uuid();
+    }
+    el1.setAttribute('flashjsId', el1Id);
+    el2.setAttribute('flashjsId', el2Id);
     console.log('applying collision to:');
-    console.log(el);
+    console.log(el1);
     console.log('and');
     console.log(el2);
     const onStyleChange = function (mutationRecord) {
       console.log(mutationRecord.target)
-      console.log(mutationRecord.target.style.marginTop);
-      console.log(mutationRecord.target.style.marginBottom);
-      console.log(mutationRecord.target.style.marginLeft);
-      console.log(mutationRecord.target.style.marginRight);
-      console.log('---------------------------------------');
-    }
-    observeStyle(el, onStyleChange);
+      console.log(mutationRecord.target.style);
+      var target = document.querySelectorAll('[flashjsId="' + el1Id + '"]')[0];
+      if (mutationRecord.target.getAttribute('flashjsId') == el1Id) {
+        target = document.querySelectorAll('[flashjsId="' + el2Id + '"]')[0]; 
+      }
+      var elMargin = [parseFloat(window.getComputedStyle(mutationRecord.target).marginTop.replace('px', '')), parseFloat(window.getComputedStyle(mutationRecord.target).marginBottom.replace('px', '')), parseFloat(window.getComputedStyle(mutationRecord.target).marginLeft.replace('px', '')), parseFloat(window.getComputedStyle(mutationRecord.target).marginRight.replace('px', ''))];
+      var elSize = [parseFloat(window.getComputedStyle(mutationRecord.target).width.replace('px', '')), parseFloat(window.getComputedStyle(mutationRecord.target).height.replace('px', ''))];
+      var targetMargin = [parseFloat(window.getComputedStyle(target).marginTop.replace('px', '')), parseFloat(window.getComputedStyle(target).marginBottom.replace('px', '')), parseFloat(window.getComputedStyle(target).marginLeft.replace('px', '')), parseFloat(window.getComputedStyle(target).marginRight.replace('px', ''))];
+      var targetSize = [parseFloat(window.getComputedStyle(target).width.replace('px', '')), parseFloat(window.getComputedStyle(target).height.replace('px', ''))];
+      if (elMargin[0] <= 0 || elMargin[0] >= targetMargin[0] || elMargin[2] <= 0 || elMargin[2] >= targetMargin[2] || ((mutationRecord.target.id == 'flashjsId') && ((elMargin[0] >= (parseFloat(window.getComputedStyle(document.querySelector('body')).height.replace('px', '')) - targetSize[1]) / 2 + targetSize[1])))) {
+        movementAllowed = movementAllowed.filter(e => e !== mutationRecord.target.getAttribute('flashjsId'));
+        console.log('gravity disabled (due to collision) on:');
+        console.log(mutationRecord.target);
+      }
+    };
+    observeStyle(el1, onStyleChange);
+    observeStyle(el2, onStyleChange);
   }
 
   function observeStyle(el, func) {
@@ -177,6 +205,12 @@ var flashjs = (function () {
       });
     });
     observer.observe(el, { attributes: true, attributeFilter: ['style'] });
+  }
+
+  function uuid() {
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    );
   }
 
   return {
