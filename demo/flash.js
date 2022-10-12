@@ -159,8 +159,7 @@ var flashjs = (function () {
         console.log(mutationRecord);
       });
     });
-    var target = document.getElementById('myId');
-    observer.observe(target, { attributes: true, attributeFilter: ['style'] });
+    observer.observe(el, { attributes: true, attributeFilter: ['style'] });
   }
 
   return {
