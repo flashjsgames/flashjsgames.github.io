@@ -156,7 +156,11 @@ var flashjs = (function () {
     console.log(el);
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutationRecord) {
-        console.log(mutationRecord);
+        console.log(mutationRecord.target.style.marginTop);
+        console.log(mutationRecord.target.style.marginBottom);
+        console.log(mutationRecord.target.style.marginLeft);
+        console.log(mutationRecord.target.style.marginRight);
+        console.log('---------------------------------------');
       });
     });
     observer.observe(el, { attributes: true, attributeFilter: ['style'] });
