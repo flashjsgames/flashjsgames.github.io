@@ -95,13 +95,7 @@ var flashjs = (function () {
           const gravityObjects = document.querySelectorAll('[gravity="true"]');
           gravityObjects.forEach(function (el) {
             const mul = parseFloat(el.getAttribute('gravity-multiplier'));
-            console.log('applying gravity to:');
-            console.log(el);
-            var velocity = 1
-            setInterval(async function () {
-              el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) + velocity;
-              velocity += 0.5;
-            }, 20 * (mul || 1));
+            gravity(el, mul);
           });
 
           started = true;
@@ -127,26 +121,22 @@ var flashjs = (function () {
     document.querySelector('flashjs').style.borderRadius = config.br || 0 + 'px';
   });
 
-  async function applyGravity(el, mul) {
+  function applyGravity(el, mul) {
     el.setAttribute('gravity', 'true');
     el.setAttribute('gravity-multiplier', mul);
     if (started) {
-      console.log('applying gravity to:');
-      console.log(el);
-      var velocity = 1
-      setInterval(async function () {
-        el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) + velocity;
-        velocity += 0.5;
-      }, 20 * (mul || 1));
+      gravity(el, mul)
     }
   }
 
-  function wait(ms) {
-    var start = Date.now(),
-      now = start;
-    while (now - start < ms) {
-      now = Date.now();
-    }
+  async function gravity(el, mul) {
+    console.log('applying gravity to:');
+    console.log(el);
+    var velocity = 1
+    setInterval(async function () {
+      el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) + velocity;
+      velocity += 1;
+    }, 15 * (mul || 1));
   }
 
   return {
