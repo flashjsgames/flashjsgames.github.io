@@ -18,6 +18,8 @@ var flashjs = (function () {
 
   config.d = w < h ? w : h;
 
+  var gravityAllowed = true;
+
   function init(userConfig) {
     const configuration = userConfig || {
       aspectRatio: '1:1',
@@ -135,11 +137,11 @@ var flashjs = (function () {
   }
 
   async function gravity(el, mul) {
-    console.log('applying gravity to:');
-    console.log(el);
-    setInterval(async function () {
-      el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) * (1 + (0.05 * (mul || 1)));
-    }, 20);
+    if (gravityAllowed) {
+      setInterval(async function () {
+        el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) * (1 + (0.05 * (mul || 1)));
+      }, 20);
+    }
   }
 
   function applyCollision(el) {
@@ -149,16 +151,27 @@ var flashjs = (function () {
     }
   }
 
-  async function collision(el) {
+  async function collision(el, el2a) {
+    const el2 = el2a || document.querySelector('flashjs');
     console.log('applying collision to:');
     console.log(el);
+    console.log('and');
+    console.log(el2);
+    const onStyleChange = function (mutationRecord) {
+      console.log(mutationRecord.target)
+      console.log(mutationRecord.target.style.marginTop);
+      console.log(mutationRecord.target.style.marginBottom);
+      console.log(mutationRecord.target.style.marginLeft);
+      console.log(mutationRecord.target.style.marginRight);
+      console.log('---------------------------------------');
+    }
+    observeStyle(el, onStyleChange);
+  }
+
+  function observeStyle(el, func) {
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutationRecord) {
-        console.log(mutationRecord.target.style.marginTop);
-        console.log(mutationRecord.target.style.marginBottom);
-        console.log(mutationRecord.target.style.marginLeft);
-        console.log(mutationRecord.target.style.marginRight);
-        console.log('---------------------------------------');
+        func(mutationRecord);
       });
     });
     observer.observe(el, { attributes: true, attributeFilter: ['style'] });
