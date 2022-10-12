@@ -69,45 +69,45 @@ var flashjs = (function () {
 
     document.querySelector('flashjs').innerHTML = document.querySelector('flashjs').innerHTML;
 
-    wait(1000);
-    
-    document.querySelector('loading').style.width = '0';
-    document.querySelector('loading').style.height = '0';
-    document.querySelector('flashjs').style.backgroundColor = config.bg;
+    setTimeout(function () {
+      document.querySelector('loading').style.width = '0';
+      document.querySelector('loading').style.height = '0';
+      document.querySelector('flashjs').style.backgroundColor = config.bg;
 
-    wait(500);
+      setTimeout(function () {
+        document.querySelector('loading').style.marginBottom = h / 2 + 'px';
+        document.querySelector('loading').style.opacity = 0;
+        if (config.tar) {
+          document.querySelector('flashjs').style.width = config.d + 'px';
+          document.querySelector('flashjs').style.height = config.d / (config.ar[0] / config.ar[1]) + 'px';
+        } else {
+          document.querySelector('flashjs').style.width = config.d / config.ar[1] + 'px';
+          document.querySelector('flashjs').style.height = config.d / config.ar[0] + 'px';
+        }
+        document.querySelector('flashjs').style.transition = 'all 500ms';
+        document.querySelector('flashjs').style.opacity = 1;
+        console.log('started');
 
-    document.querySelector('loading').style.marginBottom = h / 2 + 'px';
-    document.querySelector('loading').style.opacity = 0;
-    if (config.tar) {
-      document.querySelector('flashjs').style.width = config.d + 'px';
-      document.querySelector('flashjs').style.height = config.d / (config.ar[0] / config.ar[1]) + 'px';
-    } else {
-      document.querySelector('flashjs').style.width = config.d / config.ar[1] + 'px';
-      document.querySelector('flashjs').style.height = config.d / config.ar[0] + 'px';
-    }
-    document.querySelector('flashjs').style.transition = 'all 500ms';
-    document.querySelector('flashjs').style.opacity = 1;
-    console.log('started');
+        setTimeout(function () {
+          document.querySelector('loading').remove();
+          document.querySelector('flashjs').style.transition = 'unset';
 
-    wait(500);
+          const gravityObjects = document.querySelectorAll('[gravity="true"]');
+          gravityObjects.forEach(function (el) {
+            const mul = parseFloat(el.getAttribute('gravity-multiplier'));
+            console.log('applying gravity to:');
+            console.log(el);
+            var velocity = 1
+            setInterval(async function () {
+              el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) + velocity;
+              velocity += 0.5;
+            }, 20 * (mul || 1));
+          });
 
-    document.querySelector('loading').remove();
-    document.querySelector('flashjs').style.transition = 'unset';
-
-    const gravityObjects = document.querySelectorAll('[gravity="true"]');
-    gravityObjects.forEach(function (el) {
-      const mul = parseFloat(el.getAttribute('gravity-multiplier'));
-      console.log('applying gravity to:');
-      console.log(el);
-      var velocity = 1
-      setInterval(async function () {
-        el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) + velocity;
-        velocity += 0.5;
-      }, 20 * (mul || 1));
-    });
-
-    started = true;
+          started = true;
+        }, 500);
+      }, 500);
+    }, 1000);
   }
 
   window.addEventListener('resize', function () {
@@ -143,7 +143,7 @@ var flashjs = (function () {
 
   function wait(ms) {
     var start = Date.now(),
-          now = start;
+      now = start;
     while (now - start < ms) {
       now = Date.now();
     }
@@ -152,7 +152,7 @@ var flashjs = (function () {
   return {
     svd: config.d / 90,
     init: init,
-    start: start, 
+    start: start,
     applyGravity: applyGravity
   }
 
