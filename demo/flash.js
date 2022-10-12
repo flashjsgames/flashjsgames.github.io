@@ -6,11 +6,11 @@ var flashjs = (function () {
   var started = false;
 
   var config = {
-    ar: null,
-    tar: null,
-    br: null,
-    bg: null,
-    d: null
+    ar,
+    tar,
+    br,
+    bg,
+    d
   }
 
   var w = parseFloat(window.getComputedStyle(document.querySelector('body')).width.replace('px', '')) * 0.9;
