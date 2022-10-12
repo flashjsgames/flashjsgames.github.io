@@ -137,11 +137,9 @@ var flashjs = (function () {
   async function gravity(el, mul) {
     console.log('applying gravity to:');
     console.log(el);
-    var velocity = 2
     setInterval(async function () {
-      el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) + velocity;
-      velocity += 1;
-    }, 18 * (mul || 1));
+      el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) * (1 + (0.05 * (mul || 1)));
+    }, 20);
   }
 
   function applyCollision(el) {
