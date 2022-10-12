@@ -98,6 +98,11 @@ var flashjs = (function () {
             gravity(el, mul);
           });
 
+          const collisionObjects = document.querySelectorAll('[collision="true"]');
+          collisionObjects.forEach(function (el) {
+            collision(el);
+          });
+
           started = true;
         }, 500);
       }, 500);
@@ -139,6 +144,25 @@ var flashjs = (function () {
     }, 15 * (mul || 1));
   }
 
+  function applyCollision(el) {
+    el.setAttribute('collision', 'true');
+    if (started) {
+      collision(el)
+    }
+  }
+
+  async function collision(el) {
+    console.log('applying collision to:');
+    console.log(el);
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutationRecord) {
+        console.log(mutationRecord);
+      });
+    });
+    var target = document.getElementById('myId');
+    observer.observe(target, { attributes: true, attributeFilter: ['style'] });
+  }
+
   return {
     svd: config.d / 90,
     init: init,
@@ -162,6 +186,14 @@ Object.defineProperty(HTMLElement.prototype, "centered", {
 Object.defineProperty(HTMLElement.prototype, "applyGravity", {
   value: function applyGravity(mul) {
     flashjs.applyGravity(this, mul)
+  },
+  writable: true,
+  configurable: true
+});
+
+Object.defineProperty(HTMLElement.prototype, "applyCollision", {
+  value: function applyCollision() {
+    flashjs.applyCollision(this)
   },
   writable: true,
   configurable: true

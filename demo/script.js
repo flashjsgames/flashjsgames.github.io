@@ -26,6 +26,7 @@ var script = (function () {
   testSvg.style.borderRadius = '50%';
   testSvg.centered();
   testSvg.applyGravity();
+  testSvg.applyCollision();
   testSvg.appendChild(testRect);
   game.appendChild(testSvg);
 
