@@ -138,8 +138,10 @@ var flashjs = (function () {
 
   async function gravity(el, mul) {
     if (gravityAllowed) {
+      var velocity = 2;
       setInterval(async function () {
-        el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) * (1 + (0.05 * (mul || 1)));
+        el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) + velocity * (mul || 1);
+        velocity += 0.5;
       }, 20);
     }
   }
