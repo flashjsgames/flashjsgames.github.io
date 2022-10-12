@@ -18,7 +18,7 @@ var flashjs = (function () {
 
   config.d = w < h ? w : h;
 
-  var movementAllowed = true;
+  var movementAllowed = [];
 
   var usedIds = [];
 
