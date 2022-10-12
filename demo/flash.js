@@ -137,6 +137,7 @@ var flashjs = (function () {
     while (usedIds.includes(elId)) {
       elId = uuid();
     }
+    console.log(elId)
     movementAllowed.push(elId);
     el.setAttribute('flashjsId', elId);
     if (started) {
@@ -147,6 +148,8 @@ var flashjs = (function () {
   async function gravity(el, mul) {
     var velocity = 2;
     setInterval(async function () {
+      console.log(movementAllowed)
+      console.log(el.getAttribute('flashjsId'))
       if (movementAllowed.includes(el.getAttribute('flashjsId'))) {
         el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) + velocity * (mul || 1);
         velocity += 0.5;
