@@ -151,7 +151,7 @@ var flashjs = (function () {
     setInterval(async function () {
       console.log(movementAllowed)
       console.log(el)
-      console.log(document.querySelectorAll('[gravity="true"]'))
+      console.log(document.querySelectorAll('[gravity="true"]')[0])
       console.log(document.querySelectorAll('[gravity="true"]')[0].getAttribute('flashjsId'))
       console.log(el.getAttribute('flashjsId'))
       if (movementAllowed.includes(el.getAttribute('flashjsId'))) {
