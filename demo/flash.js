@@ -178,55 +178,62 @@ var flashjs = (function () {
 
   async function collision(el1, el2a) {
     const el2 = el2a || document.querySelector('flashjs');
-    var el1Id = uuid();
-    var el2Id = uuid();
-    if ((el1.getAttribute('flashjsId') || '') == '') {
-      var elId = uuid();
-      while (usedIds.includes(elId)) {
-        elId = uuid();
-      }
-      console.log(elId)
-      el1Id = elId;
-      usedIds.push(el1Id);
-      el1.setAttribute('flashjsId', el1Id);
-    } else if (!usedIds.includes(el1.getAttribute('flashjsId'))) {
-      usedIds.push(el1.getAttribute('flashjsId'));
-    }
-    if ((el2.getAttribute('flashjsId') || '') == '') {
-      var elId = uuid();
-      while (usedIds.includes(elId)) {
-        elId = uuid();
-      }
-      console.log(elId)
-      el2Id = elId;
-      usedIds.push(el2Id);
-      el2.setAttribute('flashjsId', el2Id);
-    } else if (!usedIds.includes(el2.getAttribute('flashjsId'))) {
-      usedIds.push(el2.getAttribute('flashjsId'));
-    }
-    console.log('applying collision to:');
-    console.log(el1);
-    console.log('and');
-    console.log(el2);
-    const onStyleChange = function (mutationRecord) {
-      console.log(mutationRecord.target)
-      console.log(mutationRecord.target.style);
-      var target = document.querySelectorAll('[flashjsId="' + el1Id + '"]')[0];
-      if (mutationRecord.target.getAttribute('flashjsId') == el1Id) {
-        target = document.querySelectorAll('[flashjsId="' + el2Id + '"]')[0]; 
-      }
-      var elMargin = [parseFloat(window.getComputedStyle(mutationRecord.target).marginTop.replace('px', '')), parseFloat(window.getComputedStyle(mutationRecord.target).marginBottom.replace('px', '')), parseFloat(window.getComputedStyle(mutationRecord.target).marginLeft.replace('px', '')), parseFloat(window.getComputedStyle(mutationRecord.target).marginRight.replace('px', ''))];
-      var elSize = [parseFloat(window.getComputedStyle(mutationRecord.target).width.replace('px', '')), parseFloat(window.getComputedStyle(mutationRecord.target).height.replace('px', ''))];
-      var targetMargin = [parseFloat(window.getComputedStyle(target).marginTop.replace('px', '')), parseFloat(window.getComputedStyle(target).marginBottom.replace('px', '')), parseFloat(window.getComputedStyle(target).marginLeft.replace('px', '')), parseFloat(window.getComputedStyle(target).marginRight.replace('px', ''))];
-      var targetSize = [parseFloat(window.getComputedStyle(target).width.replace('px', '')), parseFloat(window.getComputedStyle(target).height.replace('px', ''))];
-      if (elMargin[0] <= 0 || elMargin[0] >= targetMargin[0] || elMargin[2] <= 0 || elMargin[2] >= targetMargin[2] || ((mutationRecord.target.id == 'flashjsId') && ((elMargin[0] >= (parseFloat(window.getComputedStyle(document.querySelector('body')).height.replace('px', '')) - targetSize[1]) / 2 + targetSize[1])))) {
-        movementAllowed = movementAllowed.filter(e => e !== mutationRecord.target.getAttribute('flashjsId'));
-        console.log('gravity disabled (due to collision) on:');
-        console.log(mutationRecord.target);
-      }
-    };
-    observeStyle(el1, onStyleChange);
-    observeStyle(el2, onStyleChange);
+    const collide = isCollide(el1, el2);
+    observeStyle(el1, function (mr) {
+      console.log(mr.target.style.margionTop);
+      console.log(collide);
+      console.log(isCollide);
+      console.log('--------------------');
+    });
+    // var el1Id = uuid();
+    // var el2Id = uuid();
+    // if ((el1.getAttribute('flashjsId') || '') == '') {
+    //   var elId = uuid();
+    //   while (usedIds.includes(elId)) {
+    //     elId = uuid();
+    //   }
+    //   console.log(elId)
+    //   el1Id = elId;
+    //   usedIds.push(el1Id);
+    //   el1.setAttribute('flashjsId', el1Id);
+    // } else if (!usedIds.includes(el1.getAttribute('flashjsId'))) {
+    //   usedIds.push(el1.getAttribute('flashjsId'));
+    // }
+    // if ((el2.getAttribute('flashjsId') || '') == '') {
+    //   var elId = uuid();
+    //   while (usedIds.includes(elId)) {
+    //     elId = uuid();
+    //   }
+    //   console.log(elId)
+    //   el2Id = elId;
+    //   usedIds.push(el2Id);
+    //   el2.setAttribute('flashjsId', el2Id);
+    // } else if (!usedIds.includes(el2.getAttribute('flashjsId'))) {
+    //   usedIds.push(el2.getAttribute('flashjsId'));
+    // }
+    // console.log('applying collision to:');
+    // console.log(el1);
+    // console.log('and');
+    // console.log(el2);
+    // const onStyleChange = function (mutationRecord) {
+    //   console.log(mutationRecord.target)
+    //   console.log(mutationRecord.target.style);
+    //   var target = document.querySelectorAll('[flashjsId="' + el1Id + '"]')[0];
+    //   if (mutationRecord.target.getAttribute('flashjsId') == el1Id) {
+    //     target = document.querySelectorAll('[flashjsId="' + el2Id + '"]')[0]; 
+    //   }
+    //   var elMargin = [parseFloat(window.getComputedStyle(mutationRecord.target).marginTop.replace('px', '')), parseFloat(window.getComputedStyle(mutationRecord.target).marginBottom.replace('px', '')), parseFloat(window.getComputedStyle(mutationRecord.target).marginLeft.replace('px', '')), parseFloat(window.getComputedStyle(mutationRecord.target).marginRight.replace('px', ''))];
+    //   var elSize = [parseFloat(window.getComputedStyle(mutationRecord.target).width.replace('px', '')), parseFloat(window.getComputedStyle(mutationRecord.target).height.replace('px', ''))];
+    //   var targetMargin = [parseFloat(window.getComputedStyle(target).marginTop.replace('px', '')), parseFloat(window.getComputedStyle(target).marginBottom.replace('px', '')), parseFloat(window.getComputedStyle(target).marginLeft.replace('px', '')), parseFloat(window.getComputedStyle(target).marginRight.replace('px', ''))];
+    //   var targetSize = [parseFloat(window.getComputedStyle(target).width.replace('px', '')), parseFloat(window.getComputedStyle(target).height.replace('px', ''))];
+    //   if (elMargin[0] <= 0 || elMargin[0] >= targetMargin[0] || elMargin[2] <= 0 || elMargin[2] >= targetMargin[2] || ((mutationRecord.target.id == 'flashjsId') && ((elMargin[0] >= (parseFloat(window.getComputedStyle(document.querySelector('body')).height.replace('px', '')) - targetSize[1]) / 2 + targetSize[1])))) {
+    //     movementAllowed = movementAllowed.filter(e => e !== mutationRecord.target.getAttribute('flashjsId'));
+    //     console.log('gravity disabled (due to collision) on:');
+    //     console.log(mutationRecord.target);
+    //   }
+    // };
+    // observeStyle(el1, onStyleChange);
+    // observeStyle(el2, onStyleChange);
   }
 
   function observeStyle(el, func) {
@@ -241,6 +248,17 @@ var flashjs = (function () {
   function uuid() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
       (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    );
+  }
+
+  function isCollide(a, b) {
+    var aRect = a.getBoundingClientRect();
+    var bRect = b.getBoundingClientRect();
+    return !(
+      ((aRect.top + aRect.height) < (bRect.top)) ||
+      (aRect.top > (bRect.top + bRect.height)) ||
+      ((aRect.left + aRect.width) < bRect.left) ||
+      (aRect.left > (bRect.left + bRect.width))
     );
   }
 
