@@ -133,13 +133,21 @@ var flashjs = (function () {
   function applyGravity(el, mul) {
     el.setAttribute('gravity', 'true');
     el.setAttribute('gravity-multiplier', mul);
-    var elId = uuid();
-    while (usedIds.includes(elId)) {
-      elId = uuid();
+    if (el.getAttribute('flashjsId') || '' == '') {
+      var elId = uuid();
+      while (usedIds.includes(elId)) {
+        elId = uuid();
+      }
+      console.log(elId)
+      movementAllowed.push(elId);
+      usedIds.push(elId);
+      el.setAttribute('flashjsId', elId);
+    } else if (!movementAllowed.includes(el.getAttribute('flashjsId'))) {
+      movementAllowed.push(el.getAttribute('flashjsId'));
+      if (!usedIds.includes(el.getAttribute('flashjsId'))) {
+        usedIds.push(el.getAttribute('flashjsId'));
+      }
     }
-    console.log(elId)
-    movementAllowed.push(elId);
-    el.setAttribute('flashjsId', elId);
     console.log(el.getAttribute('flashjsId'))
     if (started) {
       gravity(el, mul)
@@ -172,14 +180,30 @@ var flashjs = (function () {
     const el2 = el2a || document.querySelector('flashjs');
     var el1Id = uuid();
     var el2Id = uuid();
-    while (usedIds.includes(el1Id)) {
-      el1Id = uuid();
+    if (el1.getAttribute('flashjsId') || '' == '') {
+      var elId = uuid();
+      while (usedIds.includes(elId)) {
+        elId = uuid();
+      }
+      console.log(elId)
+      el1Id = elId;
+      usedIds.push(el1Id);
+      el1.setAttribute('flashjsId', el1Id);
+    } else if (!usedIds.includes(el1.getAttribute('flashjsId'))) {
+      usedIds.push(el1.getAttribute('flashjsId'));
     }
-    while (usedIds.includes(el2Id)) {
-      el2Id = uuid();
+    if (el2.getAttribute('flashjsId') || '' == '') {
+      var elId = uuid();
+      while (usedIds.includes(elId)) {
+        elId = uuid();
+      }
+      console.log(elId)
+      el2Id = elId;
+      usedIds.push(el2Id);
+      el2.setAttribute('flashjsId', el2Id);
+    } else if (!usedIds.includes(el2.getAttribute('flashjsId'))) {
+      usedIds.push(el2.getAttribute('flashjsId'));
     }
-    el1.setAttribute('flashjsId', el1Id);
-    el2.setAttribute('flashjsId', el2Id);
     console.log('applying collision to:');
     console.log(el1);
     console.log('and');
