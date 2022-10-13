@@ -133,7 +133,7 @@ var flashjs = (function () {
   function applyGravity(el, mul) {
     el.setAttribute('gravity', 'true');
     el.setAttribute('gravity-multiplier', mul);
-    // if ((el.getAttribute('flashjsId') || '') == '') {
+    // if ((el.getAttribute('flashjs-id') || '') == '') {
       var elId = uuid();
       while (usedIds.includes(elId)) {
         elId = uuid();
@@ -141,14 +141,14 @@ var flashjs = (function () {
       console.log(elId)
       movementAllowed.push(elId);
       usedIds.push(elId);
-      el.setAttribute('flashjsId', elId);
-    // } else if (!movementAllowed.includes(el.getAttribute('flashjsId'))) {
-    //   movementAllowed.push(el.getAttribute('flashjsId'));
-    //   if (!usedIds.includes(el.getAttribute('flashjsId'))) {
-    //     usedIds.push(el.getAttribute('flashjsId'));
+      el.setAttribute('flashjs-id', elId);
+    // } else if (!movementAllowed.includes(el.getAttribute('flashjs-id'))) {
+    //   movementAllowed.push(el.getAttribute('flashjs-id'));
+    //   if (!usedIds.includes(el.getAttribute('flashjs-id'))) {
+    //     usedIds.push(el.getAttribute('flashjs-id'));
     //   }
     // }
-    console.log(el.getAttribute('flashjsId'))
+    console.log(el.getAttribute('flashjs-id'))
     if (started) {
       gravity(el, mul)
     }
@@ -160,9 +160,9 @@ var flashjs = (function () {
       console.log(movementAllowed)
       console.log(el)
       console.log(document.querySelectorAll('[gravity="true"]')[0])
-      console.log(document.querySelectorAll('[gravity="true"]')[0].getAttribute('flashjsId'))
-      console.log(el.getAttribute('flashjsId'))
-      if (movementAllowed.includes(el.getAttribute('flashjsId'))) {
+      console.log(document.querySelectorAll('[gravity="true"]')[0].getAttribute('flashjs-id'))
+      console.log(el.getAttribute('flashjs-id'))
+      if (movementAllowed.includes(el.getAttribute('flashjs-id'))) {
         el.style.marginTop = parseFloat(window.getComputedStyle(el).marginTop.replace('px', '')) + velocity * (mul || 1);
         velocity += 0.5;
       }
@@ -187,7 +187,7 @@ var flashjs = (function () {
     });
     // var el1Id = uuid();
     // var el2Id = uuid();
-    // if ((el1.getAttribute('flashjsId') || '') == '') {
+    // if ((el1.getAttribute('flashjs-id') || '') == '') {
     //   var elId = uuid();
     //   while (usedIds.includes(elId)) {
     //     elId = uuid();
@@ -195,11 +195,11 @@ var flashjs = (function () {
     //   console.log(elId)
     //   el1Id = elId;
     //   usedIds.push(el1Id);
-    //   el1.setAttribute('flashjsId', el1Id);
-    // } else if (!usedIds.includes(el1.getAttribute('flashjsId'))) {
-    //   usedIds.push(el1.getAttribute('flashjsId'));
+    //   el1.setAttribute('flashjs-id', el1Id);
+    // } else if (!usedIds.includes(el1.getAttribute('flashjs-id'))) {
+    //   usedIds.push(el1.getAttribute('flashjs-id'));
     // }
-    // if ((el2.getAttribute('flashjsId') || '') == '') {
+    // if ((el2.getAttribute('flashjs-id') || '') == '') {
     //   var elId = uuid();
     //   while (usedIds.includes(elId)) {
     //     elId = uuid();
@@ -207,9 +207,9 @@ var flashjs = (function () {
     //   console.log(elId)
     //   el2Id = elId;
     //   usedIds.push(el2Id);
-    //   el2.setAttribute('flashjsId', el2Id);
-    // } else if (!usedIds.includes(el2.getAttribute('flashjsId'))) {
-    //   usedIds.push(el2.getAttribute('flashjsId'));
+    //   el2.setAttribute('flashjs-id', el2Id);
+    // } else if (!usedIds.includes(el2.getAttribute('flashjs-id'))) {
+    //   usedIds.push(el2.getAttribute('flashjs-id'));
     // }
     // console.log('applying collision to:');
     // console.log(el1);
@@ -218,16 +218,16 @@ var flashjs = (function () {
     // const onStyleChange = function (mutationRecord) {
     //   console.log(mutationRecord.target)
     //   console.log(mutationRecord.target.style);
-    //   var target = document.querySelectorAll('[flashjsId="' + el1Id + '"]')[0];
-    //   if (mutationRecord.target.getAttribute('flashjsId') == el1Id) {
-    //     target = document.querySelectorAll('[flashjsId="' + el2Id + '"]')[0]; 
+    //   var target = document.querySelectorAll('[flashjs-id="' + el1Id + '"]')[0];
+    //   if (mutationRecord.target.getAttribute('flashjs-id') == el1Id) {
+    //     target = document.querySelectorAll('[flashjs-id="' + el2Id + '"]')[0]; 
     //   }
     //   var elMargin = [parseFloat(window.getComputedStyle(mutationRecord.target).marginTop.replace('px', '')), parseFloat(window.getComputedStyle(mutationRecord.target).marginBottom.replace('px', '')), parseFloat(window.getComputedStyle(mutationRecord.target).marginLeft.replace('px', '')), parseFloat(window.getComputedStyle(mutationRecord.target).marginRight.replace('px', ''))];
     //   var elSize = [parseFloat(window.getComputedStyle(mutationRecord.target).width.replace('px', '')), parseFloat(window.getComputedStyle(mutationRecord.target).height.replace('px', ''))];
     //   var targetMargin = [parseFloat(window.getComputedStyle(target).marginTop.replace('px', '')), parseFloat(window.getComputedStyle(target).marginBottom.replace('px', '')), parseFloat(window.getComputedStyle(target).marginLeft.replace('px', '')), parseFloat(window.getComputedStyle(target).marginRight.replace('px', ''))];
     //   var targetSize = [parseFloat(window.getComputedStyle(target).width.replace('px', '')), parseFloat(window.getComputedStyle(target).height.replace('px', ''))];
-    //   if (elMargin[0] <= 0 || elMargin[0] >= targetMargin[0] || elMargin[2] <= 0 || elMargin[2] >= targetMargin[2] || ((mutationRecord.target.id == 'flashjsId') && ((elMargin[0] >= (parseFloat(window.getComputedStyle(document.querySelector('body')).height.replace('px', '')) - targetSize[1]) / 2 + targetSize[1])))) {
-    //     movementAllowed = movementAllowed.filter(e => e !== mutationRecord.target.getAttribute('flashjsId'));
+    //   if (elMargin[0] <= 0 || elMargin[0] >= targetMargin[0] || elMargin[2] <= 0 || elMargin[2] >= targetMargin[2] || ((mutationRecord.target.id == 'flashjs-id') && ((elMargin[0] >= (parseFloat(window.getComputedStyle(document.querySelector('body')).height.replace('px', '')) - targetSize[1]) / 2 + targetSize[1])))) {
+    //     movementAllowed = movementAllowed.filter(e => e !== mutationRecord.target.getAttribute('flashjs-id'));
     //     console.log('gravity disabled (due to collision) on:');
     //     console.log(mutationRecord.target);
     //   }
