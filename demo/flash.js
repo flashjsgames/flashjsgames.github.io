@@ -133,7 +133,7 @@ var flashjs = (function () {
   function applyGravity(el, mul) {
     el.setAttribute('gravity', 'true');
     el.setAttribute('gravity-multiplier', mul);
-    if ((el.getAttribute('flashjsId') || '') == '') {
+    // if ((el.getAttribute('flashjsId') || '') == '') {
       var elId = uuid();
       while (usedIds.includes(elId)) {
         elId = uuid();
@@ -142,11 +142,11 @@ var flashjs = (function () {
       movementAllowed.push(elId);
       usedIds.push(elId);
       el.setAttribute('flashjsId', elId);
-    } else if (!movementAllowed.includes(el.getAttribute('flashjsId'))) {
-      movementAllowed.push(el.getAttribute('flashjsId'));
-      if (!usedIds.includes(el.getAttribute('flashjsId'))) {
-        usedIds.push(el.getAttribute('flashjsId'));
-      }
+    // } else if (!movementAllowed.includes(el.getAttribute('flashjsId'))) {
+    //   movementAllowed.push(el.getAttribute('flashjsId'));
+    //   if (!usedIds.includes(el.getAttribute('flashjsId'))) {
+    //     usedIds.push(el.getAttribute('flashjsId'));
+    //   }
     }
     console.log(el.getAttribute('flashjsId'))
     if (started) {
