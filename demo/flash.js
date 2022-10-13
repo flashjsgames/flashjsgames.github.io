@@ -147,7 +147,7 @@ var flashjs = (function () {
     //   if (!usedIds.includes(el.getAttribute('flashjsId'))) {
     //     usedIds.push(el.getAttribute('flashjsId'));
     //   }
-    }
+    // }
     console.log(el.getAttribute('flashjsId'))
     if (started) {
       gravity(el, mul)
