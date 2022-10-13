@@ -133,7 +133,7 @@ var flashjs = (function () {
   function applyGravity(el, mul) {
     el.setAttribute('gravity', 'true');
     el.setAttribute('gravity-multiplier', mul);
-    if (el.getAttribute('flashjsId') || '' == '') {
+    if ((el.getAttribute('flashjsId') || '') == '') {
       var elId = uuid();
       while (usedIds.includes(elId)) {
         elId = uuid();
@@ -180,7 +180,7 @@ var flashjs = (function () {
     const el2 = el2a || document.querySelector('flashjs');
     var el1Id = uuid();
     var el2Id = uuid();
-    if (el1.getAttribute('flashjsId') || '' == '') {
+    if ((el1.getAttribute('flashjsId') || '') == '') {
       var elId = uuid();
       while (usedIds.includes(elId)) {
         elId = uuid();
@@ -192,7 +192,7 @@ var flashjs = (function () {
     } else if (!usedIds.includes(el1.getAttribute('flashjsId'))) {
       usedIds.push(el1.getAttribute('flashjsId'));
     }
-    if (el2.getAttribute('flashjsId') || '' == '') {
+    if ((el2.getAttribute('flashjsId') || '') == '') {
       var elId = uuid();
       while (usedIds.includes(elId)) {
         elId = uuid();
